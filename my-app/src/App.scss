@@ -1,0 +1,49 @@
+
+$textColor: #ccab06;
+$textShadow: -2px 2px 2px black;
+$textSize: 36px;
+$titleFont: 'Press Start 2P';
+$strokeSize: 1px;
+$strokeColor: black;
+
+
+body {
+  background: url(./bg/sunny-rocky-mountains.png);
+  color: $textColor;
+  background-size: 120% 140%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button,input {
+  background-color: #302f31;
+}
+
+.title {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+h1{
+  
+}
+
+h1,h2,h3,p {
+  color: $textColor;
+  text-shadow: $textShadow;
+  font-family: $titleFont;
+  -webkit-text-stroke-width: $strokeSize;
+  -webkit-text-stroke-color: $strokeColor;
+  
+}
+
+.restart{
+  font-family: $titleFont;
+}
+
+.app-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}

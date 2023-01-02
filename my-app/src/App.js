@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Image } from 'react-konva';
 import Konva from 'konva';
-import './App.css';
 import { createMazeArray, roundNum } from './Maze.js';
 import { updateReal, updateVirtual } from './Player.js';
 import useImage from 'use-image';
-
+import './App.scss';
 
 const start = {
   restart: true,
@@ -19,15 +18,17 @@ const start = {
   screenHeight: 0
 };
 
-var l = [0,0]
-var rl = [1,21]
+var l = [0, 0]
+var rl = [1, 21]
 var mazeDataArray = [];
 const nr = new Array(31);
 
 class Player extends React.Component {
   constructor(props) {
     super(props);
-    this.state = start;
+    this.state = {
+    }
+
 
   }
 
@@ -40,7 +41,6 @@ class Player extends React.Component {
         height={20}
         fill={"red"}
       />
-
     );
   }
 }
@@ -166,7 +166,7 @@ class App extends Component {
 
 
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps() {
     //this.restartCheck(true);
     return {
 
@@ -182,36 +182,36 @@ class App extends Component {
     if (event.keyCode === 37 && realPosition[0] > 20) {
 
       if (nr[l[0] - 1][l[1]] === 'r') {
-        
+
         this.setState({ direction: "left" });
       }
     }
 
     // up
     if (event.keyCode === 38 && realPosition[1] > 20) {
-      if (nr[l[0]][l[1]-1] === 'r') {
+      if (nr[l[0]][l[1] - 1] === 'r') {
         this.setState({ direction: "up" });
       }
-      
+
     }
 
     //right
     if (event.keyCode === 39 && realPosition[0] < 14 * 42) {
-      
+
       console.log("vp", l[0] + 1, l[1], nr[l[0] + 1][l[1]]);
-      if (nr[l[0]+1][l[1]] === 'r') {
+      if (nr[l[0] + 1][l[1]] === 'r') {
         this.setState({ direction: "right" });
-        
+
       }
-      
+
     }
 
     //down
     if (event.keyCode === 40 && realPosition[1] < 14 * 42) {
-      if (nr[l[0]][l[1]+1] === 'r') {
+      if (nr[l[0]][l[1] + 1] === 'r') {
         this.setState({ direction: "down" });
       }
-    
+
     }
   };
 
@@ -226,8 +226,12 @@ class App extends Component {
 
   }
 
+  restartGame(start) {
+    if (start != null) {
+      this.setState({ restart: true });
+    }
 
-  componentDidMount() {
+
     if (this.state.restart) {
       mazeDataArray = createMazeArray(15, 15);
 
@@ -239,6 +243,13 @@ class App extends Component {
 
     this.setState({ restart: false })
   }
+
+
+  componentDidMount() {
+    this.setState({ restart: true })
+    this.restartGame();
+
+  }
   componentDidUpdate(prevProps, prevState) {
     var speed = 150;
     document.addEventListener("keydown", this.handleKeys, false);
@@ -249,43 +260,45 @@ class App extends Component {
   render() {
     const vP = this.state.virtualPosition;
     const rP = this.state.realPosition;
-    l = [vP[0],vP[1]];
-    rl = [rP[0],rP[1]];
+    l = [vP[0], vP[1]];
+    rl = [rP[0], rP[1]];
+    //
     return (
-      <div className='app-container'>
-        <div>
+      <div className='app-container container-fluid'>
+        <div >
           <h1>The Maze Game</h1> <br />
 
-          <button></button><br />
+          
           <h2>Score: {"1"}</h2><br />
-          <h2>D: {this.state.direction}</h2><br />
+          <button className='btn btn-success btn-lg restart' onClick={() => this.restartGame('1')} >Start Over</button><br />
+          </div>
+
+
+          {/* <h2>D: {this.state.direction}</h2><br />
           <h2>X: {rP[0]}</h2><br />
           <h2>y: {rP[1]}</h2><br />
           <h2>vX: {vP[0]}</h2><br />
-          <h2>vy: {vP[1]}</h2><br />
-          <h2>len: {l}</h2><br />
+          <h2>vy: {vP[1]}</h2><br /> */}
+
+          <Stage width={630} height={630}>
+
+            <Layer>
+              <DrawMaze mazeDataArray />
+
+
+              <Player x={this.state.realPosition[0]} y={this.state.realPosition[1]} />
+            </Layer>
+
+          </Stage>
+
+
         </div>
 
 
-        <Stage width={630} height={630}>
-
-          <Layer>
-            <DrawMaze mazeDataArray />
-
-
-            <Player x={this.state.realPosition[0]} y={this.state.realPosition[1]} />
-          </Layer>
-
-        </Stage>
-
-
-      </div>
-
-
-    );
+        );
   }
 }
 
-export default App;
+        export default App;
 
 
