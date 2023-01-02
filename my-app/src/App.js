@@ -24,27 +24,7 @@ var rl = [1, 21]
 var mazeDataArray = [];
 const nr = new Array(31);
 
-class Player extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
 
-
-  }
-
-  render() {
-    return (
-      <Rect
-        x={this.props.x}
-        y={this.props.y}
-        width={20}
-        height={20}
-        fill={"red"}
-      />
-    );
-  }
-}
 
 
 class Wall extends React.Component {
@@ -181,17 +161,18 @@ class App extends Component {
 
     //	left
     if (event.keyCode === 37 && realPosition[0] > 20) {
-
+      this.setState({ direction: "left" });
       if (nr[l[0] - 1][l[1]] === 'r') {
 
-        this.setState({ direction: "left" });
+        //this.setState({ direction: "left" });
       }
     }
 
     // up
     if (event.keyCode === 38 && realPosition[1] > 20) {
+      this.setState({ direction: "up" });
       if (nr[l[0]][l[1] - 1] === 'r') {
-        this.setState({ direction: "up" });
+        //this.setState({ direction: "up" });
       }
 
     }
@@ -200,8 +181,9 @@ class App extends Component {
     if (event.keyCode === 39 && realPosition[0] < 14 * 42) {
 
       console.log("vp", l[0] + 1, l[1], nr[l[0] + 1][l[1]]);
+      this.setState({ direction: "right" });
       if (nr[l[0] + 1][l[1]] === 'r') {
-        this.setState({ direction: "right" });
+        //this.setState({ direction: "right" });
 
       }
 
@@ -209,8 +191,9 @@ class App extends Component {
 
     //down
     if (event.keyCode === 40 && realPosition[1] < 14 * 42) {
+      this.setState({ direction: "down" });
       if (nr[l[0]][l[1] + 1] === 'r') {
-        this.setState({ direction: "down" });
+        //this.setState({ direction: "down" });
       }
 
     }
@@ -289,7 +272,7 @@ class App extends Component {
 
             <Layer>
               <DrawMaze mazeDataArray={this.mazeDataArray}/>
-              <Player x={this.state.realPosition[0]} y={this.state.realPosition[1]} />
+              <Player x={this.state.realPosition[0]} y={this.state.realPosition[1] } src="https://cdn.discordapp.com/attachments/831412945472061473/1059424923187150939/thumbnail.png" />
             </Layer>
 
           </Stage>
@@ -299,6 +282,48 @@ class App extends Component {
 
 
         );
+  }
+}
+
+
+class Player extends React.Component {
+  state = {
+    image: null,
+  };
+  componentDidMount() {
+    this.loadImage();
+  }
+  componentDidUpdate(oldProps) {
+    if (oldProps.src !== this.props.src) {
+      this.loadImage();
+    }
+  }
+  componentWillUnmount() {
+    this.image.removeEventListener('load', this.handleLoad);
+  }
+  loadImage() {
+    this.image = new window.Image();
+    this.image.src = this.props.src;
+    this.image.addEventListener('load', this.handleLoad);
+  }
+  handleLoad = () => {
+    this.setState({
+      image: this.image,
+    });
+  };
+  render() {
+    return (
+      <Image
+        x={this.props.x-10}
+        y={this.props.y-20}
+        image={this.state.image}
+        ref={(node) => {
+          this.imageNode = node;
+        }}
+        width={40}
+        height={40}
+      />
+    );
   }
 }
 
