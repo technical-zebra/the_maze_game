@@ -1,7 +1,7 @@
 # The-Maze-Game
 For the current version of repository live demo is not available, any preview required to clone current repository and setup local React server.
 
-##Screenshots
+## Screenshots
 ![Alt text](https://github.com/technical-zebra/The-Maze-Game/blob/main/my-app/screenshots/1.png "image demo")
 
 
