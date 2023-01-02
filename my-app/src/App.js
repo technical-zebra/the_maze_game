@@ -15,7 +15,8 @@ const start = {
   food: [200, 70],
   score: 0,
   screenWidth: 0,
-  screenHeight: 0
+  screenHeight: 0,
+  updateMaze: true
 };
 
 var l = [0, 0]
@@ -162,6 +163,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = start;
+    this.gameClose = this.gameClose.bind(this);
   }
 
 
@@ -169,7 +171,6 @@ class App extends Component {
   static getDerivedStateFromProps() {
     //this.restartCheck(true);
     return {
-
       screenWidth: window.innerWidth / 1.5,
       screenHeight: window.innerHeight - 50
     };
@@ -226,35 +227,39 @@ class App extends Component {
 
   }
 
-  restartGame(start) {
-    if (start != null) {
-      this.setState({ restart: true });
-    }
+  restartGame() {
+    
+    mazeDataArray = createMazeArray(15, 15);
 
-
-    if (this.state.restart) {
-      mazeDataArray = createMazeArray(15, 15);
-
-      for (var i = 0; i < nr.length; i++) {
-        nr[i] = new Array(31);
-      }
-
+    for (var i = 0; i < nr.length; i++) {
+      nr[i] = new Array(31);
     }
 
     this.setState({ restart: false })
+  }
+
+  gameClose(e) {
+    e.stopPropagation();
+    this.setState({
+      restart: true
+    });
+    this.restartGame();
+    this.setState({
+      updateMaze: !this.state.updateMaze
+    });
   }
 
 
   componentDidMount() {
     this.setState({ restart: true })
     this.restartGame();
-
   }
+
   componentDidUpdate(prevProps, prevState) {
     var speed = 150;
     document.addEventListener("keydown", this.handleKeys, false);
     clearInterval(this.interval);
-    this.interval = setInterval(() => this.updatePlayer(), speed);
+    this.interval = setInterval(() => this.updatePlayer(), speed,);
   }
 
   render() {
@@ -270,7 +275,7 @@ class App extends Component {
 
           
           <h2>Score: {"1"}</h2><br />
-          <button className='btn btn-success btn-lg restart' onClick={() => this.restartGame('1')} >Start Over</button><br />
+          <button className='btn btn-success btn-lg restart' onClick={this.gameClose} >Start Over</button><br />
           </div>
 
 
@@ -283,9 +288,7 @@ class App extends Component {
           <Stage width={630} height={630}>
 
             <Layer>
-              <DrawMaze mazeDataArray />
-
-
+              <DrawMaze mazeDataArray={this.mazeDataArray}/>
               <Player x={this.state.realPosition[0]} y={this.state.realPosition[1]} />
             </Layer>
 
