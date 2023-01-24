@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/the_maze_game/static/css/main.a95e55ab.css",
+    "main.css": "/the_maze_game/static/css/main.b134e106.css",
     "main.js": "/the_maze_game/static/js/main.9bd82833.js",
     "static/js/787.28cb0dcd.chunk.js": "/the_maze_game/static/js/787.28cb0dcd.chunk.js",
     "static/media/sunny-rocky-mountains.png": "/the_maze_game/static/media/sunny-rocky-mountains.64eed879e9a9858d2e7a.png",
     "index.html": "/the_maze_game/index.html",
-    "main.a95e55ab.css.map": "/the_maze_game/static/css/main.a95e55ab.css.map",
+    "main.b134e106.css.map": "/the_maze_game/static/css/main.b134e106.css.map",
     "main.9bd82833.js.map": "/the_maze_game/static/js/main.9bd82833.js.map",
     "787.28cb0dcd.chunk.js.map": "/the_maze_game/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a95e55ab.css",
+    "static/css/main.b134e106.css",
     "static/js/main.9bd82833.js"
   ]
 }
