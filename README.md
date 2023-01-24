@@ -2,7 +2,7 @@
 This is an ongoing project!!! Features can change over time.
 
 ## Live Preview
-![https://technical-zebra.github.io/the_maze_game/](https://technical-zebra.github.io/the_maze_game/ "image demo")
+[https://technical-zebra.github.io/the_maze_game/](https://technical-zebra.github.io/the_maze_game/)
 
 
 
